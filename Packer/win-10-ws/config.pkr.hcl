@@ -29,8 +29,12 @@ source "proxmox-iso" "seclab-win-ws" {
   node         = "${var.proxmox_node}"
   username     = "${local.proxmox_api_id}"
   token        = "${local.proxmox_api_token}"
-  iso_file     = "local:iso/Win-10-Enterprise.iso"
-  iso_checksum = "sha256:ef7312733a9f5d7d51cfa04ac497671995674ca5e1058d5164d6028f0938d668"
+  
+  boot_iso {
+    iso_file     = "local:iso/windows-10.iso"
+    iso_checksum = "sha256:ef7312733a9f5d7d51cfa04ac497671995674ca5e1058d5164d6028f0938d668"
+  }
+
   /*skip_export             = true*/
   communicator             = "ssh"
   ssh_username             = "${local.username}"
@@ -44,14 +48,14 @@ source "proxmox-iso" "seclab-win-ws" {
   insecure_skip_tls_verify = true
 
   additional_iso_files {
-    device       = "ide3"
+    type         = "ide"
     iso_file     = "local:iso/Autounattend-win-10-ws.iso"
-    iso_checksum = "sha256:2893ca8f6d1f420436b6c213fa618710e7689a67d4bf924263361f07cced3b34"
+    iso_checksum = "sha256:eac8a3ec4a714263bf1e3049902622ea2ba36cbd24f00d9a40b9b89e1b0e9c9e"
   }
   additional_iso_files {
-    device       = "sata0"
-    iso_file     = "local:iso/virtio.iso"
-    iso_checksum = "sha256:8a066741ef79d3fb66e536fb6f010ad91269364bd9b8c1ad7f2f5655caf8acd8"
+    type         = "sata"
+    iso_file     = "local:iso/virtio-win.iso"
+    iso_checksum = "sha256:57b0f6dc8dc92dc2ae8621f8b1bfbd8a873de9bedc788c4c4b305ea28acc77cd"
     unmount      = true
   }
 
@@ -62,7 +66,7 @@ source "proxmox-iso" "seclab-win-ws" {
   disks {
     type         = "virtio"
     disk_size    = "50G"
-    storage_pool = "local-lvm"
+    storage_pool = "external-zfs"
   }
   scsi_controller = "virtio-scsi-pci"
 
