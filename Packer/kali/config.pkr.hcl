@@ -30,8 +30,12 @@ source "proxmox-iso" "seclab-kali" {
   node                     = "${var.proxmox_node}"
   username                 = "${local.proxmox_api_id}"
   token                    = "${local.proxmox_api_token}"
-  iso_file                 = "local:iso/kali-linux-2024.4-installer-netinst-amd64.iso"
-  iso_checksum             = "sha256:b519437fcdc850ecd8a2136819bc0fdabe68f32042ef979bff5adaa148364789"
+
+  boot_iso {
+    iso_file               = "local:iso/kali-linux-2024.4-installer-netinst-amd64.iso"
+    iso_checksum           = "sha256:b519437fcdc850ecd8a2136819bc0fdabe68f32042ef979bff5adaa148364789"
+  }
+  
   ssh_username             = "${local.username}"
   ssh_password             = "${local.password}"
   ssh_handshake_attempts   = 100
