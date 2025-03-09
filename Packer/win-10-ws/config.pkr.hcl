@@ -49,11 +49,13 @@ source "proxmox-iso" "seclab-win-ws" {
 
   additional_iso_files {
     type         = "ide"
+    index        = 3 
     iso_file     = "local:iso/Autounattend-win-10-ws.iso"
     iso_checksum = "sha256:eac8a3ec4a714263bf1e3049902622ea2ba36cbd24f00d9a40b9b89e1b0e9c9e"
   }
   additional_iso_files {
     type         = "sata"
+    index        = 0
     iso_file     = "local:iso/virtio-win.iso"
     iso_checksum = "sha256:57b0f6dc8dc92dc2ae8621f8b1bfbd8a873de9bedc788c4c4b305ea28acc77cd"
     unmount      = true
