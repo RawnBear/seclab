@@ -30,21 +30,25 @@ source "proxmox-iso" "seclab-win-dc" {
   node         = "${var.proxmox_node}"
   username     = "${local.proxmox_api_id}"
   token        = "${local.proxmox_api_token}"
-  iso_file     = "local:iso/Win-Server-2019.iso"
-  iso_checksum = "sha256:549bca46c055157291be6c22a3aaaed8330e78ef4382c99ee82c896426a1cee1"
-
+  
+  boot_iso {
+    iso_file     = "local:iso/Win-Server-2019.iso"
+    iso_checksum = "sha256:549bca46c055157291be6c22a3aaaed8330e78ef4382c99ee82c896426a1cee1"
+  }
 
   additional_iso_files {
-    device       = "ide3"
+    type         = "ide"
+    index        = 3
     iso_file     = "local:iso/Autounattend-win-dc.iso"
-    iso_checksum = "sha256:c72f913cab51cc5c29e6fd5eec859b85ce227a113ae4887affef091cd6d629b2"
+    iso_checksum = "sha256:731d0e206d4c257a364e5f9f70c31fb5b4c841b48a2281f189d0e78a6cc1918d"
     unmount      = true
   }
 
   additional_iso_files {
-    device       = "sata0"
-    iso_file     = "local:iso/virtio.iso"
-    iso_checksum = "sha256:8a066741ef79d3fb66e536fb6f010ad91269364bd9b8c1ad7f2f5655caf8acd8"
+    type         = "sata"
+    index        = 0
+    iso_file     = "local:iso/virtio-win.iso"
+    iso_checksum = "sha256:57b0f6dc8dc92dc2ae8621f8b1bfbd8a873de9bedc788c4c4b305ea28acc77cd"
     unmount      = true
   }
 
@@ -68,7 +72,7 @@ source "proxmox-iso" "seclab-win-dc" {
   disks {
     type         = "virtio"
     disk_size    = "50G"
-    storage_pool = "local-lvm"
+    storage_pool = "external-zfs"
   }
   scsi_controller = "virtio-scsi-pci"
 }
